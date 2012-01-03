@@ -3,7 +3,9 @@ package efaia.files.handler;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import org.xml.sax.Attributes;
 import org.xml.sax.InputSource;
@@ -12,17 +14,39 @@ import org.xml.sax.XMLReader;
 import org.xml.sax.helpers.DefaultHandler;
 import org.xml.sax.helpers.XMLReaderFactory;
 
+import efaia.model.Connection;
+import efaia.model.Node;
 import efaia.util.Constantes;
 
 public class FileHandler extends DefaultHandler implements Constantes {
 
 	private final XMLReader file;
+	private List<Node> nodos;
+	private List<Connection> conecciones;
+	
+	
 
 	public FileHandler() throws SAXException {
 		file = XMLReaderFactory.createXMLReader();
 		file.setContentHandler(this);
 		file.setErrorHandler(this);
+		nodos = new ArrayList<Node>();
+		conecciones = new ArrayList<Connection>();
 	}
+	
+	
+
+	public List<Node> getNodos() {
+		return nodos;
+	}
+
+
+
+	public List<Connection> getConecciones() {
+		return conecciones;
+	}
+
+
 
 	public void leer(final String archivoXML) throws FileNotFoundException,
 			IOException, SAXException {
@@ -40,45 +64,17 @@ public class FileHandler extends DefaultHandler implements Constantes {
 		System.out.println("Final del Documento XML");
 	}
 	
-	@Override
-	public void startElement(String uri, String localName, String qName,
-			Attributes attributes) throws SAXException {
-		System.out.println(qName);
-		System.out.println(attributes.getIndex(qName));
-		System.out.println(uri);
-		
-	}
 
-//	@Override
-	/*public void startElement(String uri, String name, String qName,
+
+	@Override
+	public void startElement(String uri, String name, String qName,
 			Attributes atts) {
 		
-		if ( qName.equals(BRANCH) || qName.equals(LEAF) ) {
-//            schemaCheck();
-            
-            // parse a node element
-            Node n;
-            if ( m_activeNode == null ) {
-                n = m_tree.addRoot();
-            } else {
-                n = m_tree.addChild(m_activeNode);
-            }
-            m_activeNode = n;
+		if ( qName.equals(NODE)) {
+            parseNode(atts);
         }
-        else if ( qName.equals(NODE) ) {
-            // parse an attribute
-            parseAttribute(atts);
-        } else if(qName.equals(AGENT_STATE)){
-        	// parsea el estado del agente.
-        	parseAgentState(atts);
-        }
-		
-		
-		System.out.println("tElemento: " + name);
-
-		for (int i = 0; i < atts.getLength(); i++) {
-			System.out.println("ttAtributo: " + atts.getLocalName(i) + " = "
-					+ atts.getValue(i));
+		else{
+			parseEdge(atts);
 		}
 	}
 
@@ -86,50 +82,55 @@ public class FileHandler extends DefaultHandler implements Constantes {
 	public void endElement(String uri, String name, String qName) {
 		System.out.println("tFin Elemento: " + name);
 	}
-	
-    protected void parseAgentState(Attributes atts) {
-		StringBuilder sb = new StringBuilder();
-		for(int i =0; i<atts.getLength();i++){
-        	sb.append(atts.getQName(i));
-        	sb.append("=");
-        	sb.append(atts.getValue(i));
-        	sb.append("  ");
-        	if(i != atts.getLength()-1)
-        		sb.append("\n");
-        }
-		System.out.println("------------------------------");
-		System.out.println(sb.toString());
-		System.out.println("------------------------------");
-		
-//		m_activeNode.set(AGENT_STATE, sb.toString());
-	}
     
-    protected void parseAttribute(Attributes atts) {
-        String alName, id = null, action = null;
+    protected void parseNode(Attributes atts) {
+        String alName, id = null, action = null, cost=null, agentState = null;
         for ( int i = 0; i < atts.getLength(); i++ ) {
             alName = atts.getQName(i);
             if ( alName.equals(ID) ) {
                 id = atts.getValue(i);
             } else if ( alName.equals(ACTION) ) {
                 action = atts.getValue(i);
+            } else if ( alName.equals(COST) ){
+            	cost = atts.getValue(i);
+            } else if ( alName.equals(AGENT_STATE) ){
+            	agentState = atts.getValue(i);
             }
         }
-        if ( id == null || action == null ) {
+        if ( id == null || action == null || cost == null || agentState == null ) {
             System.err.println("Attribute under-specified");
             return;
         }
-
-        try {
-            //Object val = parse(value, m_nodes.getColumnType(name));
-        	StringBuilder sb = new StringBuilder();
-        	sb.append(id);
-        	sb.append("\n");
-        	sb.append(action);
-//            m_activeNode.set(NODE, sb.toString());
-        } catch ( Exception e ) {
-            throw new RuntimeException(e);
+        
+        Node n =new Node(id, action, cost, agentState);
+        nodos.add(n);
+    }
+    
+    private void parseEdge(Attributes atts) {
+		
+		String alName, idS = null, idT = null;
+        for ( int i = 0; i < atts.getLength(); i++ ) {
+            alName = atts.getQName(i);
+            if ( alName.equals(SOURCE) ) {
+                idS = atts.getValue(i);
+            } else if ( alName.equals(TARGET) ) {
+                idT = atts.getValue(i);
+            }
         }
-    }*/
+        
+        if ( idS == null || idT == null) {
+            System.err.println("Attribute under-specified");
+            return;
+        }
+        
+        Integer s = new Integer(idS);
+        Integer t = new Integer(idT);
+        
+        Connection c = new Connection(idS, idT, nodos.get(s.intValue()), nodos.get(t.intValue()));
+        conecciones.add(c);
+		
+		
+	}
 
 	protected Class parseType(String type) {
 		type = Character.toUpperCase(type.charAt(0))
