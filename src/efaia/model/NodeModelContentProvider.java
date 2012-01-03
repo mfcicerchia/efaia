@@ -1,28 +1,23 @@
 package efaia.model;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+
+import org.xml.sax.SAXException;
+
+import efaia.files.handler.FileHandler;
 
 public class NodeModelContentProvider {
 	private List<Connection> connections;
 	private List<Node> nodes;
+	private FileHandler fh;
 
 	public NodeModelContentProvider() {
 		// Image here a fancy DB access
 		// Now create a few nodes
 		nodes = new ArrayList<Node>();
-		Node node = new Node("1", "Null");
-		nodes.add(node);
-		node = new Node("2", "Eat");
-		nodes.add(node);
-		node = new Node("3", "GoRight");
-		nodes.add(node);
-		node = new Node("4", "GoLeft");
-		nodes.add(node);
-		node = new Node("5", "GoUp");
-		nodes.add(node);
-		node = new Node("6", "GoDown");
-		nodes.add(node);
 
 		connections = new ArrayList<Connection>();
 		Connection connect = new Connection("1", "1", nodes.get(0),
@@ -43,6 +38,28 @@ public class NodeModelContentProvider {
 					.add(connection.getDestination());
 		}
 	}
+	
+	public NodeModelContentProvider(String filePath){
+		try {
+			fh = new FileHandler();
+			fh.leer(filePath);
+			nodes = fh.getNodos();
+			connections = fh.getConecciones();
+			for (Connection connection : connections) {
+				connection.getSource().getConnectedTo()
+						.add(connection.getDestination());
+			}
+			
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (SAXException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	
 
 	public List<Node> getNodes() {
 		return nodes;

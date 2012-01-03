@@ -1,5 +1,6 @@
 package efaia.test;
 
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
@@ -13,7 +14,7 @@ public class FileHandlerTest {
 	public static void main(String[] args) {
 		try {
 			FileHandler fh = new FileHandler();
-			fh.leer(FileHandlerTest.FILE);
+			fh.leer("/home/kbza/Facultad/Proyecto/efaia/archivos/13.xml");
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

@@ -37,16 +37,8 @@ public class TreeView extends ViewPart implements IZoomableWorkbenchPart {
 		viewer.setLabelProvider(new ZestLabelProvider());
 		viewer.setConnectionStyle(ZestStyles.CONNECTIONS_DIRECTED);
 		
-/*		NodeModelContentProvider model = new NodeModelContentProvider();
+		NodeModelContentProvider model = new NodeModelContentProvider("/home/kbza/Facultad/Proyecto/efaia/archivos/13.xml");
 		viewer.setInput(model.getNodes());
-		LayoutAlgorithm layout = new TreeLayoutAlgorithm(LayoutStyles.NO_LAYOUT_NODE_RESIZING);
-		viewer.setLayoutAlgorithm(layout, true);
-		viewer.applyLayout();
-		fillToolBar();*/
-		
-		File arc = new File(FileDOTHandler.FILEPATH);
-		
-		DotGraph graph = new DotGraph(arc, viewer.getGraphControl(), SWT.NONE);
 		LayoutAlgorithm layout = new TreeLayoutAlgorithm(LayoutStyles.NO_LAYOUT_NODE_RESIZING);
 		viewer.setLayoutAlgorithm(layout, true);
 		viewer.applyLayout();
