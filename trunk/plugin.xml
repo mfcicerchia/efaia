@@ -33,6 +33,12 @@
             name="TreeView"
             restorable="true">
       </view>
+      <view
+            class="efaia.view.AgentStateProperty"
+            id="eFaia.view.AgentStateProperty"
+            name="Estado Agente"
+            restorable="true">
+      </view>
    </extension>
    <extension
          point="org.eclipse.ui.menus">

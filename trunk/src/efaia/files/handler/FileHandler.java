@@ -56,12 +56,10 @@ public class FileHandler extends DefaultHandler implements Constantes {
 
 	@Override
 	public void startDocument() {
-		System.out.println("Comienzo del Documento XML");
 	}
 
 	@Override
 	public void endDocument() {
-		System.out.println("Final del Documento XML");
 	}
 	
 
@@ -80,7 +78,6 @@ public class FileHandler extends DefaultHandler implements Constantes {
 
 	@Override
 	public void endElement(String uri, String name, String qName) {
-		System.out.println("tFin Elemento: " + name);
 	}
     
     protected void parseNode(Attributes atts) {
@@ -98,7 +95,7 @@ public class FileHandler extends DefaultHandler implements Constantes {
             }
         }
         if ( id == null || action == null || cost == null || agentState == null ) {
-            System.err.println("Attribute under-specified");
+            System.err.println("Error Nodo");
             return;
         }
         
@@ -119,7 +116,7 @@ public class FileHandler extends DefaultHandler implements Constantes {
         }
         
         if ( idS == null || idT == null) {
-            System.err.println("Attribute under-specified");
+            System.err.println("Error Coneccion");
             return;
         }
         
