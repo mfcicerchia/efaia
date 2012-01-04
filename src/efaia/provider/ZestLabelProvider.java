@@ -11,7 +11,13 @@ public class ZestLabelProvider extends LabelProvider {
 	public String getText(Object element) {
 		if (element instanceof Node) {
 			Node myNode = (Node) element;
-			return myNode.getName();
+			StringBuilder sb = new StringBuilder();
+			sb.append(myNode.getId());
+			sb.append("\n");
+			sb.append(myNode.getName());
+			sb.append("\n");
+			sb.append(myNode.getCost());
+			return sb.toString();
 		}
 		// Not called with the IGraphEntityContentProvider
 		if (element instanceof Connection) {

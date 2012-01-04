@@ -39,8 +39,10 @@ public class TreeView extends ViewPart implements IZoomableWorkbenchPart {
 		
 		NodeModelContentProvider model = new NodeModelContentProvider("/home/kbza/Facultad/Proyecto/efaia/archivos/13.xml");
 		viewer.setInput(model.getNodes());
-		LayoutAlgorithm layout = new TreeLayoutAlgorithm(LayoutStyles.NO_LAYOUT_NODE_RESIZING);
-		viewer.setLayoutAlgorithm(layout, true);
+		//LayoutAlgorithm layout = new TreeLayoutAlgorithm(LayoutStyles.NO_LAYOUT_NODE_RESIZING);
+		TreeLayoutAlgorithm l = new TreeLayoutAlgorithm();
+		l.setResizing(false);
+		viewer.setLayoutAlgorithm(l, true);
 		viewer.applyLayout();
 		fillToolBar();
 		
