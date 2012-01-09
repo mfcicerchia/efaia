@@ -73,6 +73,32 @@ public class Node {
 		return connections;
 	}
 	
+	public List<String> getASAN() {
+		ArrayList<String> agentStateAtrNames = new ArrayList<String>();
+		String state = agentState.replace("=","");
+		String[] as = state.split("\"");
+		
+		for(int i=0; i<as.length;i++){
+			if((i % 2)==0)
+				agentStateAtrNames.add(as[i].trim());
+		}
+		
+		return agentStateAtrNames;
+	}
+	
+	public List<String> getASV() {
+		ArrayList<String> agentStateValues = new ArrayList<String>();
+		String state = agentState.replace("=","");
+		String[] as = state.split("\"");
+		
+		for(int i=0; i<as.length;i++){
+			if((i % 2)!=0)
+				agentStateValues.add(as[i]);
+		}
+		
+		return agentStateValues;
+	}
+	
 	@Override
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
@@ -81,8 +107,4 @@ public class Node {
 		sb.append(name);
 		return sb.toString();
 	}
-
-
-
-
 }

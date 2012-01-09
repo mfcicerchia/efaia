@@ -15,7 +15,7 @@
          point="org.eclipse.ui.perspectives">
       <perspective
             name="Perspective"
-            class="efaia.Perspective"
+            class="efaia.perspective.Perspective"
             id="eFaia.perspective">
       </perspective>
    </extension>
@@ -36,6 +36,12 @@
       <view
             class="efaia.view.AgentStateProperty"
             id="eFaia.view.AgentStateProperty"
+            name="Estado Agente"
+            restorable="true">
+      </view>
+      <view
+            class="efaia.view.ASView"
+            id="eFaia.view.ASView"
             name="Estado Agente"
             restorable="true">
       </view>
@@ -65,6 +71,4 @@
             id="eFaia.commands.OpenDirectory"
             name="DirectoryOpen">
       </command>
-   </extension>
-
-</plugin>
+   </extension></plugin>
