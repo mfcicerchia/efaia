@@ -15,6 +15,7 @@ import efaia.provider.FileViewLabelProvider;
 public class FilesView extends ViewPart {
 
 	public static final String ID = "eFaia.view.FilesView";
+	private TreeViewer treeViewer;
 
 	public FilesView() {
 		super();
@@ -27,7 +28,7 @@ public class FilesView extends ViewPart {
 		 Composite archivos = new Composite(parent, SWT.NONE);
 		 archivos.setLayout(new TreeColumnLayout());
 		 
-		 TreeViewer treeViewer = new TreeViewer(archivos, SWT.BORDER);
+		 treeViewer = new TreeViewer(archivos, SWT.BORDER);
 		 treeViewer.setContentProvider(new FileViewContentProvider());
 		 treeViewer.setLabelProvider(new FileViewLabelProvider());
 		 Tree tree = treeViewer.getTree();
@@ -52,7 +53,7 @@ public class FilesView extends ViewPart {
 
 	@Override
 	public void setFocus() {
-		// TODO Auto-generated method stub
+		treeViewer.getControl().setFocus();
 
 	}
 

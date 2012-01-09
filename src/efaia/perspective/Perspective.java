@@ -1,4 +1,4 @@
-package efaia;
+package efaia.perspective;
 
 import org.eclipse.ui.IPageLayout;
 import org.eclipse.ui.IPerspectiveFactory;
