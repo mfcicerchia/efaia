@@ -50,6 +50,7 @@ public class ASView extends ViewPart {
 	}
 	
 	public void setearDatos(List<String> keys, List<String> values){
+		agentState.removeAll();
 		for(int i=0;i<keys.size();i++)
 			agregarFila(keys.get(i), values.get(i));
 		

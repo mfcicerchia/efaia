@@ -1,7 +1,12 @@
 package efaia.view;
 
+import java.awt.Toolkit;
 import java.util.List;
 
+import org.eclipse.draw2d.geometry.Dimension;
+import org.eclipse.jface.viewers.ISelectionChangedListener;
+import org.eclipse.jface.viewers.SelectionChangedEvent;
+import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.ui.IActionBars;
@@ -30,6 +35,7 @@ public class TreeView extends ViewPart implements IZoomableWorkbenchPart {
 	public static final String ID = "eFaia.view.TreeView";
 	private Tree t;
 	private Node nodoSeleccionado;
+	private List<Node> nodos;
 	private GraphViewer viewer;
 
 	public void createPartControl(Composite parent) {
@@ -40,23 +46,39 @@ public class TreeView extends ViewPart implements IZoomableWorkbenchPart {
 
 		NodeModelContentProvider model = new NodeModelContentProvider(
 				"/home/kbza/Facultad/Proyecto/efaia/archivos/13.xml");
-		viewer.setInput(model.getNodes());
+		nodos = model.getNodes(); 
+		viewer.setInput(nodos);
 		getSite().setSelectionProvider(viewer);
-		nodoSeleccionado = model.getNodes().get(0);
+		nodoSeleccionado = nodos.get(0);
 		// LayoutAlgorithm layout = new
 		// TreeLayoutAlgorithm(LayoutStyles.NO_LAYOUT_NODE_RESIZING);
 		TreeLayoutAlgorithm l = new TreeLayoutAlgorithm();
 		l.setResizing(false);
 		viewer.setLayoutAlgorithm(l, true);
 		viewer.applyLayout();
+		viewer.addSelectionChangedListener(new ISelectionChangedListener() {
+			
+			@Override
+			public void selectionChanged(SelectionChangedEvent event) {
+				StructuredSelection s = (StructuredSelection) event.getSelection();
+				System.out.println(s.size());
+				if(s.size()>0){
+					List nodes = s.toList();
+					if(nodes.get(nodes.size()-1).getClass().equals(Node.class)){
+						Node n = (Node) nodes.get(nodes.size()-1);
+						ASView asView = (ASView) getSite()
+								.getPage().findView(ASView.ID);
+						List<String> keys = n.getASAN();
+						List<String> values = n.getASV();
+						
+						asView.setearDatos(keys, values);
+					}
+				}
+				//System.out.println(event.getSelectionProvider().toString());
+				
+			}
+		});
 		fillToolBar();
-
-		ASView asView = (ASView) getSite()
-				.getPage().findView(ASView.ID);
-		List<String> keys = nodoSeleccionado.getASAN();
-		List<String> values = nodoSeleccionado.getASV();
-		
-		asView.setearDatos(keys, values);
 
 		System.out.println("Pausa");
 
