@@ -1,7 +1,10 @@
 package efaia.view;
 
 import java.awt.Toolkit;
+import java.io.File;
 import java.util.List;
+
+import javax.swing.JFileChooser;
 
 import org.eclipse.draw2d.geometry.Dimension;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
@@ -19,6 +22,7 @@ import org.eclipse.zest.core.viewers.GraphViewer;
 import org.eclipse.zest.core.viewers.IZoomableWorkbenchPart;
 import org.eclipse.zest.core.viewers.ZoomContributionViewItem;
 import org.eclipse.zest.core.widgets.ZestStyles;
+import org.eclipse.zest.layouts.algorithms.SpaceTreeLayoutAlgorithm;
 import org.eclipse.zest.layouts.algorithms.TreeLayoutAlgorithm;
 
 import efaia.model.Node;
@@ -44,16 +48,17 @@ public class TreeView extends ViewPart implements IZoomableWorkbenchPart {
 		viewer.setLabelProvider(new ZestLabelProvider());
 		viewer.setConnectionStyle(ZestStyles.CONNECTIONS_DIRECTED);
 
+		File f = new File("D:/Proyecto/efaia/archivos/0.xml");
 		NodeModelContentProvider model = new NodeModelContentProvider(
-				"/home/kbza/Facultad/Proyecto/efaia/archivos/13.xml");
+				f.getPath());
 		nodos = model.getNodes(); 
 		viewer.setInput(nodos);
 		getSite().setSelectionProvider(viewer);
 		nodoSeleccionado = nodos.get(0);
 		// LayoutAlgorithm layout = new
 		// TreeLayoutAlgorithm(LayoutStyles.NO_LAYOUT_NODE_RESIZING);
-		TreeLayoutAlgorithm l = new TreeLayoutAlgorithm();
-		l.setResizing(false);
+		SpaceTreeLayoutAlgorithm l = new SpaceTreeLayoutAlgorithm();
+		//l.setResizing(false);
 		viewer.setLayoutAlgorithm(l, true);
 		viewer.applyLayout();
 		viewer.addSelectionChangedListener(new ISelectionChangedListener() {

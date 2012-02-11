@@ -34,7 +34,7 @@ public class FilesView extends ViewPart {
 		 Tree tree = treeViewer.getTree();
 		 tree.setHeaderVisible(true);
 		 tree.setLinesVisible(true);
-		 File f = new File("/home/kbza/Facultad/Proyecto/examples/searchTrees");
+		 File f = new File("D:/Proyecto/efaia/archivos");
 		 treeViewer.setInput(f);
 		 //treeViewer.setInput("Hola");
 
