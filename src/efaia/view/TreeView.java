@@ -66,7 +66,6 @@ public class TreeView extends ViewPart implements IZoomableWorkbenchPart {
 			@Override
 			public void selectionChanged(SelectionChangedEvent event) {
 				StructuredSelection s = (StructuredSelection) event.getSelection();
-				System.out.println(s.size());
 				if(s.size()>0){
 					List nodes = s.toList();
 					if(nodes.get(nodes.size()-1).getClass().equals(Node.class)){
@@ -79,14 +78,10 @@ public class TreeView extends ViewPart implements IZoomableWorkbenchPart {
 						asView.setearDatos(keys, values);
 					}
 				}
-				//System.out.println(event.getSelectionProvider().toString());
 				
 			}
 		});
 		fillToolBar();
-
-		System.out.println("Pausa");
-
 	}
 
 	private void fillToolBar() {

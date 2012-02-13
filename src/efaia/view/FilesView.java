@@ -34,8 +34,6 @@ public class FilesView extends ViewPart {
 		 Tree tree = treeViewer.getTree();
 		 tree.setHeaderVisible(true);
 		 tree.setLinesVisible(true);
-		 File f = new File("D:/Proyecto/efaia/archivos");
-		 treeViewer.setInput(f);
 		 //treeViewer.setInput("Hola");
 
 	}
@@ -43,12 +41,13 @@ public class FilesView extends ViewPart {
 	public void agregarArchivos(File[] files) {
 
 		for (int i = 0; i < files.length; i++) {
+			agregarArchivos(files[i]);
 		}
 
 	}
 
 	public void agregarArchivos(File file) {
-
+		treeViewer.setInput(file);
 	}
 
 	@Override
