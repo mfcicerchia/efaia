@@ -30,12 +30,14 @@ public class ASView extends ViewPart {
 		agentState.setHeaderVisible(true);
 		agentState.setLinesVisible(true);
 		
-		TableColumn tblclmnPropiedad = new TableColumn(agentState, SWT.NONE);
-		tblclmnPropiedad.setWidth(251);
+		TableColumn tblclmnPropiedad = new TableColumn(agentState, SWT.CENTER);
+		tblclmnPropiedad.setResizable(false);
+		tblclmnPropiedad.setWidth(258);
 		tblclmnPropiedad.setText("Propiedad");
 		
-		TableColumn tblclmnValor = new TableColumn(agentState, SWT.NONE);
-		tblclmnValor.setWidth(117);
+		TableColumn tblclmnValor = new TableColumn(agentState, SWT.CENTER);
+		tblclmnValor.setResizable(false);
+		tblclmnValor.setWidth(329);
 		tblclmnValor.setText("Valor");
 		
 		

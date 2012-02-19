@@ -3,38 +3,50 @@ package efaia.view;
 import java.io.File;
 
 import org.eclipse.jface.layout.TreeColumnLayout;
+import org.eclipse.jface.viewers.DoubleClickEvent;
+import org.eclipse.jface.viewers.IDoubleClickListener;
+import org.eclipse.jface.viewers.IStructuredSelection;
+import org.eclipse.jface.viewers.ListViewer;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.List;
 import org.eclipse.swt.widgets.Tree;
 import org.eclipse.ui.part.ViewPart;
 
+import efaia.actions.OpenViewAction;
 import efaia.provider.FileViewContentProvider;
 import efaia.provider.FileViewLabelProvider;
 
 public class FilesView extends ViewPart {
 
 	public static final String ID = "eFaia.view.FilesView";
-	private TreeViewer treeViewer;
+	private ListViewer listViewer;
+	private List list;
 
 	public FilesView() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 
 	@Override
 	public void createPartControl(Composite parent) {
 		 
-		 Composite archivos = new Composite(parent, SWT.NONE);
-		 archivos.setLayout(new TreeColumnLayout());
-		 
-		 treeViewer = new TreeViewer(archivos, SWT.BORDER);
-		 treeViewer.setContentProvider(new FileViewContentProvider());
-		 treeViewer.setLabelProvider(new FileViewLabelProvider());
-		 Tree tree = treeViewer.getTree();
-		 tree.setHeaderVisible(true);
-		 tree.setLinesVisible(true);
-		 //treeViewer.setInput("Hola");
+		 listViewer = new ListViewer(parent, SWT.BORDER | SWT.V_SCROLL);
+		  list = listViewer.getList();
+		  listViewer.setLabelProvider(new FileViewLabelProvider());
+		  listViewer.setContentProvider(new FileViewContentProvider());
+		  listViewer.addDoubleClickListener(new IDoubleClickListener() {
+			
+			@Override
+			public void doubleClick(DoubleClickEvent event) {
+				System.out.println(listViewer.getSelection());
+				
+				TreeView tView = (TreeView) getSite()
+						.getPage().findView(TreeView.ID);
+				
+				tView.cargarArbol(listViewer.getSelection().toString());
+			}
+		});
 
 	}
 
@@ -47,13 +59,12 @@ public class FilesView extends ViewPart {
 	}
 
 	public void agregarArchivos(File file) {
-		treeViewer.setInput(file);
+		listViewer.setInput(file);
 	}
 
 	@Override
 	public void setFocus() {
-		treeViewer.getControl().setFocus();
+		listViewer.getControl().setFocus();
 
 	}
-
 }

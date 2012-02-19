@@ -73,4 +73,8 @@
             id="eFaia.OpenDirectory"
             name="Open Directory">
       </command>
+      <command
+            id="eFaia.OpenView"
+            name="OpenView">
+      </command>
    </extension></plugin>

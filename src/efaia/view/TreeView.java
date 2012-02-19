@@ -47,40 +47,7 @@ public class TreeView extends ViewPart implements IZoomableWorkbenchPart {
 		viewer.setContentProvider(new ZestNodeContentProvider());
 		viewer.setLabelProvider(new ZestLabelProvider());
 		viewer.setConnectionStyle(ZestStyles.CONNECTIONS_DIRECTED);
-
-		File f = new File("D:/Proyecto/efaia/archivos/0.xml");
-		NodeModelContentProvider model = new NodeModelContentProvider(
-				f.getPath());
-		nodos = model.getNodes(); 
-		viewer.setInput(nodos);
-		getSite().setSelectionProvider(viewer);
-		nodoSeleccionado = nodos.get(0);
-		// LayoutAlgorithm layout = new
-		// TreeLayoutAlgorithm(LayoutStyles.NO_LAYOUT_NODE_RESIZING);
-		SpaceTreeLayoutAlgorithm l = new SpaceTreeLayoutAlgorithm();
-		//l.setResizing(false);
-		viewer.setLayoutAlgorithm(l, true);
-		viewer.applyLayout();
-		viewer.addSelectionChangedListener(new ISelectionChangedListener() {
-			
-			@Override
-			public void selectionChanged(SelectionChangedEvent event) {
-				StructuredSelection s = (StructuredSelection) event.getSelection();
-				if(s.size()>0){
-					List nodes = s.toList();
-					if(nodes.get(nodes.size()-1).getClass().equals(Node.class)){
-						Node n = (Node) nodes.get(nodes.size()-1);
-						ASView asView = (ASView) getSite()
-								.getPage().findView(ASView.ID);
-						List<String> keys = n.getASAN();
-						List<String> values = n.getASV();
-						
-						asView.setearDatos(keys, values);
-					}
-				}
-				
-			}
-		});
+		
 		fillToolBar();
 	}
 
@@ -116,6 +83,41 @@ public class TreeView extends ViewPart implements IZoomableWorkbenchPart {
 	 */
 	public void dispose() {
 		super.dispose();
+	}
+	
+	public void cargarArbol(String path){
+		String p1 = path.replace("[", "").replace("]", "");
+		File f = new File(p1);
+		NodeModelContentProvider model = new NodeModelContentProvider(
+				f.getPath());
+		nodos = model.getNodes(); 
+		viewer.setInput(nodos);
+		getSite().setSelectionProvider(viewer);
+		nodoSeleccionado = nodos.get(0);
+		SpaceTreeLayoutAlgorithm l = new SpaceTreeLayoutAlgorithm();
+		//l.setResizing(false);
+		viewer.setLayoutAlgorithm(l, true);
+		viewer.applyLayout();
+		viewer.addSelectionChangedListener(new ISelectionChangedListener() {
+			
+			@Override
+			public void selectionChanged(SelectionChangedEvent event) {
+				StructuredSelection s = (StructuredSelection) event.getSelection();
+				if(s.size()>0){
+					List nodes = s.toList();
+					if(nodes.get(nodes.size()-1).getClass().equals(Node.class)){
+						Node n = (Node) nodes.get(nodes.size()-1);
+						ASView asView = (ASView) getSite()
+								.getPage().findView(ASView.ID);
+						List<String> keys = n.getASAN();
+						List<String> values = n.getASV();
+						
+						asView.setearDatos(keys, values);
+					}
+				}
+				
+			}
+		});
 	}
 
 }
