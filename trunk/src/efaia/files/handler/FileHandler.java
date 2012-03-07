@@ -71,7 +71,7 @@ public class FileHandler extends DefaultHandler implements Constantes {
 		if ( qName.equals(NODE)) {
             parseNode(atts);
         }
-		else{
+		else if ( qName.equals(EDGE)){
 			parseEdge(atts);
 		}
 	}

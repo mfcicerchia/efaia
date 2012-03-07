@@ -12,6 +12,11 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.List;
 import org.eclipse.swt.widgets.Tree;
+import org.eclipse.ui.IViewPart;
+import org.eclipse.ui.IViewReference;
+import org.eclipse.ui.PartInitException;
+import org.eclipse.ui.PlatformUI;
+import org.eclipse.ui.WorkbenchException;
 import org.eclipse.ui.part.ViewPart;
 
 import efaia.actions.OpenViewAction;
@@ -26,25 +31,38 @@ public class FilesView extends ViewPart {
 
 	public FilesView() {
 		super();
+		this.setPartName("Archivos");
 	}
 
 	@Override
 	public void createPartControl(Composite parent) {
-		 
-		 listViewer = new ListViewer(parent, SWT.BORDER | SWT.V_SCROLL);
-		  list = listViewer.getList();
-		  listViewer.setLabelProvider(new FileViewLabelProvider());
-		  listViewer.setContentProvider(new FileViewContentProvider());
-		  listViewer.addDoubleClickListener(new IDoubleClickListener() {
-			
+
+		listViewer = new ListViewer(parent, SWT.BORDER | SWT.V_SCROLL);
+		list = listViewer.getList();
+		listViewer.setLabelProvider(new FileViewLabelProvider());
+		listViewer.setContentProvider(new FileViewContentProvider());
+		listViewer.addDoubleClickListener(new IDoubleClickListener() {
+
 			@Override
 			public void doubleClick(DoubleClickEvent event) {
-				System.out.println(listViewer.getSelection());
+				TreeView tv = null;
+				OpenViewAction ov = new OpenViewAction(getSite()
+						.getWorkbenchWindow(), TreeView.ID);
+				ov.run();
+				IViewReference[] viewReferences = PlatformUI.getWorkbench()
+						.getActiveWorkbenchWindow().getActivePage()
+						.getViewReferences();
+				for (int i = 0; i < viewReferences.length; i++) {
+					if(viewReferences[i].getId().equals(TreeView.ID)){
+						tv = (TreeView) viewReferences[i].getPart(true);
+					}
+						
+				}
 				
-				TreeView tView = (TreeView) getSite()
-						.getPage().findView(TreeView.ID);
-				
-				tView.cargarArbol(listViewer.getSelection().toString());
+				if(tv != null){
+					tv.cargarArbol(event.getSelection().toString());
+					tv.setTitle(event.getSelection().toString());
+				}
 			}
 		});
 
@@ -66,5 +84,9 @@ public class FilesView extends ViewPart {
 	public void setFocus() {
 		listViewer.getControl().setFocus();
 
+	}
+	
+	public void setearRuta(String path){
+		this.setContentDescription(path);
 	}
 }
