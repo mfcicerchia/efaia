@@ -20,13 +20,17 @@ public class DirectoryOpenHandler extends AbstractHandler implements IHandler {
 		Shell shell = PlatformUI.getWorkbench().getActiveWorkbenchWindow()
 				.getShell();
 
-		DirectoryDialog dialog = new DirectoryDialog(shell, SWT.OPEN);
-
-		String fileSelected = dialog.open();
+		/*DirectoryDialog dialog = new DirectoryDialog(shell, SWT.OPEN);
+		dialog.setFilterPath("/eFaia/archivos");
+		String fileSelected = dialog.open();*/
+		
+		// TODO: Eliminar esto y descomentar arriba.
+		String fileSelected = "D:\\Proyecto\\efaia\\archivos";
 
 		if (fileSelected != null) {	
 			FilesView fv = (FilesView) PlatformUI.getWorkbench().getActiveWorkbenchWindow().getPages()[0].findView(FilesView.ID);
 			fv.agregarArchivos(new File(fileSelected));
+			fv.setearRuta(fileSelected);
 		}
 		
 		return null;

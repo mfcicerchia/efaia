@@ -24,10 +24,11 @@
       <view
             class="efaia.view.FilesView"
             id="eFaia.view.FilesView"
-            name="FilesView"
+            name="Archivos"
             restorable="true">
       </view>
       <view
+            allowMultiple="true"
             class="efaia.view.TreeView"
             id="eFaia.view.TreeView"
             name="TreeView"
@@ -77,4 +78,13 @@
             id="eFaia.OpenView"
             name="OpenView">
       </command>
+   </extension>
+   <extension
+         point="org.eclipse.ui.editors">
+      <editor
+            class="efaia.editors.TreeViz"
+            default="false"
+            id="eFaia.editors.TreeViz"
+            name="TreeViz">
+      </editor>
    </extension></plugin>
