@@ -59,6 +59,15 @@
                   label="Open File..."
                   style="push">
             </command>
+            <separator
+                  name="eFaia.separator1"
+                  visible="true">
+            </separator>
+            <command
+                  commandId="eFaia.ExportToJPG"
+                  label="ExportToJPG..."
+                  style="push">
+            </command>
          </menu>
       </menuContribution>
    </extension>
@@ -75,8 +84,9 @@
             name="Open Directory">
       </command>
       <command
-            id="eFaia.OpenView"
-            name="OpenView">
+            defaultHandler="efaia.handler.ExportToJPGHandler"
+            id="eFaia.ExportToJPG"
+            name="ExportToJPG...">
       </command>
    </extension>
    <extension

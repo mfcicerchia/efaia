@@ -6,8 +6,6 @@ import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.core.commands.IHandler;
-import org.eclipse.swt.SWT;
-import org.eclipse.swt.widgets.DirectoryDialog;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.PlatformUI;
 
@@ -20,19 +18,23 @@ public class DirectoryOpenHandler extends AbstractHandler implements IHandler {
 		Shell shell = PlatformUI.getWorkbench().getActiveWorkbenchWindow()
 				.getShell();
 
-		/*DirectoryDialog dialog = new DirectoryDialog(shell, SWT.OPEN);
-		dialog.setFilterPath("/eFaia/archivos");
-		String fileSelected = dialog.open();*/
-		
+		/*
+		 * DirectoryDialog dialog = new DirectoryDialog(shell, SWT.OPEN);
+		 * dialog.setFilterPath("/eFaia/archivos"); String fileSelected =
+		 * dialog.open();
+		 */
+
 		// TODO: Eliminar esto y descomentar arriba.
 		String fileSelected = "D:\\Proyecto\\efaia\\archivos";
 
-		if (fileSelected != null) {	
-			FilesView fv = (FilesView) PlatformUI.getWorkbench().getActiveWorkbenchWindow().getPages()[0].findView(FilesView.ID);
+		if (fileSelected != null) {
+			FilesView fv = (FilesView) PlatformUI.getWorkbench()
+					.getActiveWorkbenchWindow().getPages()[0]
+					.findView(FilesView.ID);
 			fv.agregarArchivos(new File(fileSelected));
 			fv.setearRuta(fileSelected);
 		}
-		
+
 		return null;
 	}
 
