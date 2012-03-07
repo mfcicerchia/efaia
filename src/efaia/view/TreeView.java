@@ -3,10 +3,17 @@ package efaia.view;
 import java.io.File;
 import java.util.List;
 
+import org.eclipse.draw2d.SWTGraphics;
+import org.eclipse.draw2d.geometry.Point;
+import org.eclipse.draw2d.geometry.Rectangle;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.graphics.GC;
+import org.eclipse.swt.graphics.Image;
+import org.eclipse.swt.graphics.ImageData;
+import org.eclipse.swt.graphics.ImageLoader;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.ui.IActionBars;
 import org.eclipse.ui.part.ViewPart;
@@ -14,7 +21,9 @@ import org.eclipse.zest.core.viewers.AbstractZoomableViewer;
 import org.eclipse.zest.core.viewers.GraphViewer;
 import org.eclipse.zest.core.viewers.IZoomableWorkbenchPart;
 import org.eclipse.zest.core.viewers.ZoomContributionViewItem;
+import org.eclipse.zest.core.widgets.Graph;
 import org.eclipse.zest.core.widgets.ZestStyles;
+import org.eclipse.zest.dot.DotGraph;
 import org.eclipse.zest.layouts.algorithms.SpaceTreeLayoutAlgorithm;
 
 import efaia.model.Node;
@@ -134,6 +143,27 @@ public class TreeView extends ViewPart implements IZoomableWorkbenchPart {
 			this.setPartName(p1);
 		}
 
+	}
+	
+	public void saveImage(String filename, int format) {
+		Graph g = (Graph) viewer.getControl();
+		Rectangle bounds = g.getContents().getBounds();
+		Point size = new Point(g.getContents().getSize().width, g.getContents()
+				.getSize().height);
+		org.eclipse.draw2d.geometry.Point viewLocation = g.getViewport()
+				.getViewLocation();
+		final Image image = new Image(null, size.x, size.y);
+		GC gc = new GC(image);
+		SWTGraphics swtGraphics = new SWTGraphics(gc);
+
+		swtGraphics.translate(-1 * bounds.x + viewLocation.x, -1 * bounds.y
+				+ viewLocation.y);
+		g.getViewport().paint(swtGraphics);
+		gc.copyArea(image, 0, 0);
+		gc.dispose();
+		ImageLoader loader = new ImageLoader();
+		loader.data = new ImageData[] { image.getImageData() };
+		loader.save(filename, 4);
 	}
 
 }
