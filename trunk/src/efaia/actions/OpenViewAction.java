@@ -5,14 +5,11 @@ import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PartInitException;
 
-import efaia.view.TreeView;
-
 public class OpenViewAction extends Action {
 
 	private final IWorkbenchWindow window;
 	public static int instanceNum;
 	private final String viewId;
-	private TreeView ventAct;
 
 	public OpenViewAction(IWorkbenchWindow window, String viewId) {
 		this.window = window;
@@ -21,7 +18,7 @@ public class OpenViewAction extends Action {
 
 	public void run() {
 		try {
-			ventAct = (TreeView) window.getActivePage()
+			window.getActivePage()
 					.showView(viewId, Integer.toString(instanceNum),
 							IWorkbenchPage.VIEW_ACTIVATE);
 			instanceNum++;

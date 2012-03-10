@@ -23,14 +23,13 @@ import org.eclipse.zest.core.viewers.IZoomableWorkbenchPart;
 import org.eclipse.zest.core.viewers.ZoomContributionViewItem;
 import org.eclipse.zest.core.widgets.Graph;
 import org.eclipse.zest.core.widgets.ZestStyles;
-import org.eclipse.zest.dot.DotGraph;
 import org.eclipse.zest.layouts.algorithms.SpaceTreeLayoutAlgorithm;
 
 import efaia.model.Node;
 import efaia.model.NodeModelContentProvider;
 import efaia.model.Tree;
-import efaia.provider.ZestLabelProvider;
-import efaia.provider.ZestNodeContentProvider;
+import efaia.provider.TreeViewLabelProvider;
+import efaia.provider.TreeViewNodeContentProvider;
 
 public class TreeView extends ViewPart implements IZoomableWorkbenchPart {
 
@@ -47,8 +46,8 @@ public class TreeView extends ViewPart implements IZoomableWorkbenchPart {
 
 	public void createPartControl(Composite parent) {
 		viewer = new GraphViewer(parent, SWT.BORDER);
-		viewer.setContentProvider(new ZestNodeContentProvider());
-		viewer.setLabelProvider(new ZestLabelProvider());
+		viewer.setContentProvider(new TreeViewNodeContentProvider());
+		viewer.setLabelProvider(new TreeViewLabelProvider());
 		viewer.setConnectionStyle(ZestStyles.CONNECTIONS_DIRECTED);
 
 		fillToolBar();

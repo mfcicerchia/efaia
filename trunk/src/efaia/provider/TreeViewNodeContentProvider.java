@@ -5,7 +5,7 @@ import org.eclipse.zest.core.viewers.IGraphEntityContentProvider;
 
 import efaia.model.Node;
 
-public class ZestNodeContentProvider  extends ArrayContentProvider  implements IGraphEntityContentProvider {
+public class TreeViewNodeContentProvider  extends ArrayContentProvider  implements IGraphEntityContentProvider {
 
 	@Override
 	public Object[] getConnectedTo(Object entity) {
