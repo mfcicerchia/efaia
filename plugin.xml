@@ -5,7 +5,9 @@
    <extension
          id="application"
          point="org.eclipse.core.runtime.applications">
-      <application>
+      <application
+            icon="icons/efaia.png"
+            visible="true">
          <run
                class="efaia.Application">
          </run>
@@ -40,6 +42,12 @@
             name="Estado Agente"
             restorable="true">
       </view>
+      <view
+            class="efaia.view.ESView"
+            id="eFaia.view.ESView"
+            name="Estado Ambiente"
+            restorable="true">
+      </view>
    </extension>
    <extension
          point="org.eclipse.ui.menus">
@@ -51,11 +59,13 @@
                label="File">
             <command
                   commandId="eFaia.OpenDirectory"
+                  icon="icons/abrir-el-archivo-icono-7135-16.png"
                   label="Open Directory..."
                   style="push">
             </command>
             <command
                   commandId="eFaia.OpenFile"
+                  icon="icons/abrir-el-archivo-icono-5656-16.png"
                   label="Open File..."
                   style="push">
             </command>
@@ -65,6 +75,7 @@
             </separator>
             <command
                   commandId="eFaia.ExportToJPG"
+                  icon="icons/exportacion_16.png"
                   label="ExportToJPG..."
                   style="push">
             </command>

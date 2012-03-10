@@ -7,6 +7,7 @@ import org.eclipse.core.commands.IHandler;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.FileDialog;
 import org.eclipse.swt.widgets.Shell;
+import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.PlatformUI;
 
 import efaia.view.TreeView;
@@ -15,17 +16,23 @@ public class ExportToJPGHandler extends AbstractHandler implements IHandler {
 
 	@Override
 	public Object execute(ExecutionEvent event) throws ExecutionException {
-		TreeView tv = (TreeView) PlatformUI.getWorkbench()
+		IWorkbenchPart part = PlatformUI.getWorkbench()
 				.getActiveWorkbenchWindow().getActivePage().getActivePart();
 
-		Shell shell = PlatformUI.getWorkbench().getActiveWorkbenchWindow()
-				.getShell();
+		if (part instanceof TreeView) {
+			TreeView tv = (TreeView) part;
 
-		FileDialog dialog = new FileDialog(shell, SWT.SAVE);
-		String fileSelected = dialog.open();
-		
-		if(fileSelected != null)
-			tv.saveImage(fileSelected, 4);
+			Shell shell = PlatformUI.getWorkbench().getActiveWorkbenchWindow()
+					.getShell();
+
+			FileDialog dialog = new FileDialog(shell, SWT.SAVE);
+			dialog.setFilterExtensions(new String[] { "*.jpg", "*.*" });
+			dialog.setFilterNames(new String[] { "JPEG Image File", "All Files" });
+			String fileSelected = dialog.open();
+
+			if (fileSelected != null)
+				tv.saveImage(fileSelected, 4);
+		}
 
 		return null;
 	}

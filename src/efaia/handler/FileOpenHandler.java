@@ -22,8 +22,7 @@ public class FileOpenHandler extends AbstractHandler implements IHandler {
 
 		FileDialog dialog = new FileDialog(shell, SWT.OPEN | SWT.MULTI);
 		dialog.setFilterExtensions(new String[] { "*.xml", "*.*" });
-		dialog.setFilterNames(new String[] { "TreeSearch File", "All Files" });
-		dialog.setFilterPath("/home/kbza/workspace/eFaia/searchTrees");
+		dialog.setFilterNames(new String[] { "EFAIATreeSearch File", "All Files" });
 		String fileSelected = dialog.open();
 		
 
@@ -33,7 +32,7 @@ public class FileOpenHandler extends AbstractHandler implements IHandler {
 
 		if (fileSelected != null) {
 			// Perform Action, like open the file.
-			//arc.agregarArchivos(FilesPath.generarFiles(dialog.getFilterPath(), dialog.getFileNames()));
+			// TODO: Hacer incorporación de archivos.
 		}
 		return null;
 	}

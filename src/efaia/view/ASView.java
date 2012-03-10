@@ -2,15 +2,14 @@ package efaia.view;
 
 import java.util.List;
 
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.layout.GridData;
+import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Table;
-import org.eclipse.ui.part.ViewPart;
-import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.swt.widgets.TableItem;
-import swing2swt.layout.BorderLayout;
-import org.eclipse.swt.layout.GridLayout;
-import org.eclipse.swt.layout.GridData;
+import org.eclipse.ui.part.ViewPart;
 
 public class ASView extends ViewPart {
 	

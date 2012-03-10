@@ -12,8 +12,6 @@ public class GraphStatic extends Graph {
 				new SWTEventDispatcher() {
 					public void dispatchMouseMoved(
 							org.eclipse.swt.events.MouseEvent me) {
-						// Doing nothing
-						System.out.println("Entra");
 					}
 				});
 		// TODO Auto-generated constructor stub
