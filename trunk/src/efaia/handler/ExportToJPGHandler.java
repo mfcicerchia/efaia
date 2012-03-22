@@ -4,6 +4,7 @@ import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.core.commands.IHandler;
+import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.FileDialog;
 import org.eclipse.swt.widgets.Shell;
@@ -32,6 +33,10 @@ public class ExportToJPGHandler extends AbstractHandler implements IHandler {
 
 			if (fileSelected != null)
 				tv.saveImage(fileSelected, 4);
+		} else {
+			MessageDialog.openWarning(PlatformUI.getWorkbench()
+					.getActiveWorkbenchWindow().getShell(), "Atención",
+					"No ha seleccionado un árbol de búsqueda.");
 		}
 
 		return null;

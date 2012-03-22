@@ -6,8 +6,7 @@
          id="application"
          point="org.eclipse.core.runtime.applications">
       <application
-            icon="icons/efaia.png"
-            visible="true">
+            icon="icons/efaia.png">
          <run
                class="efaia.Application">
          </run>
@@ -21,7 +20,7 @@
             id="eFaia.perspective">
       </perspective>
    </extension>
-   <extension
+<extension
          point="org.eclipse.ui.views">
       <view
             class="efaia.view.FilesView"
@@ -49,7 +48,7 @@
             restorable="true">
       </view>
    </extension>
-   <extension
+      <extension
          point="org.eclipse.ui.menus">
       <menuContribution
             allPopups="false"
@@ -81,6 +80,20 @@
             </command>
          </menu>
       </menuContribution>
+      <menuContribution
+            allPopups="false"
+            locationURI="toolbar:org.eclipse.ui.main.toolbar">
+         <toolbar
+               id="eFaia.toolbar">
+            <command
+                  commandId="eFaia.ExportToJPG"
+                  icon="icons/exportacion_16.png"
+                  label="ExportToJPG..."
+                  style="push"
+                  tooltip="Export the Tree to JPG File">
+            </command>
+         </toolbar>
+      </menuContribution>
    </extension>
    <extension
          point="org.eclipse.ui.commands">
@@ -100,12 +113,5 @@
             name="ExportToJPG...">
       </command>
    </extension>
-   <extension
-         point="org.eclipse.ui.editors">
-      <editor
-            class="efaia.editors.TreeViz"
-            default="false"
-            id="eFaia.editors.TreeViz"
-            name="TreeViz">
-      </editor>
-   </extension></plugin>
+
+</plugin>
