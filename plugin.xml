@@ -15,15 +15,16 @@
    <extension
          point="org.eclipse.ui.perspectives">
       <perspective
-            name="Perspective"
             class="efaia.perspective.Perspective"
-            id="eFaia.perspective">
+            id="eFaia.perspective"
+            name="Perspective">
       </perspective>
    </extension>
 <extension
          point="org.eclipse.ui.views">
       <view
             class="efaia.view.FilesView"
+            icon="icons/bulleted_list.png"
             id="eFaia.view.FilesView"
             name="Archivos"
             restorable="true">
@@ -31,12 +32,14 @@
       <view
             allowMultiple="true"
             class="efaia.view.TreeView"
+            icon="icons/search_tree.png"
             id="eFaia.view.TreeView"
             name="TreeView"
             restorable="true">
       </view>
       <view
             class="efaia.view.ASView"
+            icon="icons/informacion-icono-8807-16.png"
             id="eFaia.view.ASView"
             name="Estado Agente"
             restorable="true">
@@ -112,6 +115,22 @@
             id="eFaia.ExportToJPG"
             name="ExportToJPG...">
       </command>
+   </extension>
+   <extension
+         id="product"
+         point="org.eclipse.core.runtime.products">
+      <product
+            application="eFaia.application"
+            name="Deploy Test">
+         <property
+               name="appName"
+               value="Deploy Test">
+         </property>
+         <property
+               name="windowImages"
+               value="icons/efaia_16.png,icons/efaia.png">
+         </property>
+      </product>
    </extension>
 
 </plugin>

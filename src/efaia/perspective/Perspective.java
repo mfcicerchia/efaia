@@ -19,7 +19,7 @@ public class Perspective implements IPerspectiveFactory {
 				IPageLayout.ID_EDITOR_AREA);
 		fl.addPlaceholder(TreeView.ID+":*");
 
-		layout.addView(ASView.ID, IPageLayout.BOTTOM, 0.71f, "trees");
+		layout.addView(ASView.ID, IPageLayout.BOTTOM, 0.78f, "trees");
 		layout.addView(FilesView.ID, IPageLayout.LEFT, 0.29f, "trees");
 		
 	}

@@ -2,6 +2,7 @@ package efaia.model;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.StringTokenizer;
 
 public class Node {
 	private String id;
@@ -76,6 +77,7 @@ public class Node {
 	public List<String> getASAN() {
 		ArrayList<String> agentStateAtrNames = new ArrayList<String>();
 		String state = agentState.replace("=","");
+		StringTokenizer st = new StringTokenizer(state);
 		String[] as = state.split("\"");
 		
 		for(int i=0; i<as.length;i++){
