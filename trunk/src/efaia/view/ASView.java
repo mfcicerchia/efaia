@@ -10,12 +10,18 @@ import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.swt.widgets.TableItem;
 import org.eclipse.ui.part.ViewPart;
+import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.Text;
+import org.eclipse.swt.custom.StyledText;
+import org.eclipse.wb.swt.SWTResourceManager;
 
 public class ASView extends ViewPart {
 	
 	public static final String ID = "eFaia.view.ASView";
-	private Table agentState;
+	private Text asText;
 
+	
+	
 	public ASView() {
 		// TODO Auto-generated constructor stub
 	}
@@ -24,43 +30,25 @@ public class ASView extends ViewPart {
 	public void createPartControl(Composite parent) {
 		parent.setLayout(new GridLayout(1, false));
 		
-		agentState = new Table(parent, SWT.BORDER | SWT.FULL_SELECTION);
-		agentState.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
-		agentState.setHeaderVisible(true);
-		agentState.setLinesVisible(true);
-		
-		TableColumn tblclmnPropiedad = new TableColumn(agentState, SWT.CENTER);
-		tblclmnPropiedad.setResizable(false);
-		tblclmnPropiedad.setWidth(258);
-		tblclmnPropiedad.setText("Propiedad");
-		
-		TableColumn tblclmnValor = new TableColumn(agentState, SWT.CENTER);
-		tblclmnValor.setResizable(false);
-		tblclmnValor.setWidth(329);
-		tblclmnValor.setText("Valor");
+		asText = new Text(parent, SWT.BORDER | SWT.READ_ONLY | SWT.H_SCROLL | SWT.V_SCROLL | SWT.CANCEL | SWT.CENTER | SWT.MULTI);
+		asText.setEnabled(false);
+		asText.setFont(SWTResourceManager.getFont("Segoe UI", 10, SWT.NORMAL));
+		asText.setBackground(SWTResourceManager.getColor(SWT.COLOR_WHITE));
+		asText.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		
 		
 		
 
 	}
 	
-	private void agregarFila(String key, String value){
-		TableItem item= new TableItem(agentState, SWT.NONE);
-		item.setText(0,key);
-		item.setText(1,value);	
-	}
 	
-	public void setearDatos(List<String> keys, List<String> values){
-		agentState.removeAll();
-		for(int i=0;i<keys.size();i++)
-			agregarFila(keys.get(i), values.get(i));
-		
-		agentState.redraw();
+	public void setearDatos(String agentState){
+		asText.setText(agentState);
 	}
 
 	@Override
 	public void setFocus() {
-		agentState.setFocus();
+		asText.setFocus();
 
 	}
 	

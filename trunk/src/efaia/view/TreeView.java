@@ -54,10 +54,10 @@ public class TreeView extends ViewPart implements IZoomableWorkbenchPart {
 	}
 
 	private void fillToolBar() {
-		ZoomContributionViewItem toolbarZoomContributionViewItem = new ZoomContributionViewItem(
+		/*ZoomContributionViewItem toolbarZoomContributionViewItem = new ZoomContributionViewItem(
 				this);
 		IActionBars bars = getViewSite().getActionBars();
-		bars.getMenuManager().add(toolbarZoomContributionViewItem);
+		bars.getMenuManager().add(toolbarZoomContributionViewItem);*/
 
 	}
 
@@ -123,10 +123,8 @@ public class TreeView extends ViewPart implements IZoomableWorkbenchPart {
 						Node n = (Node) nodes.get(nodes.size() - 1);
 						ASView asView = (ASView) getSite().getPage().findView(
 								ASView.ID);
-						List<String> keys = n.getASAN();
-						List<String> values = n.getASV();
-
-						asView.setearDatos(keys, values);
+						
+						asView.setearDatos(n.getAgentState());
 					}
 				}
 
