@@ -14,7 +14,6 @@ public class GraphStatic extends Graph {
 							org.eclipse.swt.events.MouseEvent me) {
 					}
 				});
-		// TODO Auto-generated constructor stub
 	}
 
 }

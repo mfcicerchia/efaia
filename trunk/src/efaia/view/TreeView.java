@@ -3,6 +3,7 @@ package efaia.view;
 import java.io.File;
 import java.util.List;
 
+import org.eclipse.draw2d.SWTEventDispatcher;
 import org.eclipse.draw2d.SWTGraphics;
 import org.eclipse.draw2d.geometry.Point;
 import org.eclipse.draw2d.geometry.Rectangle;
@@ -15,12 +16,10 @@ import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.graphics.ImageData;
 import org.eclipse.swt.graphics.ImageLoader;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.ui.IActionBars;
 import org.eclipse.ui.part.ViewPart;
 import org.eclipse.zest.core.viewers.AbstractZoomableViewer;
 import org.eclipse.zest.core.viewers.GraphViewer;
 import org.eclipse.zest.core.viewers.IZoomableWorkbenchPart;
-import org.eclipse.zest.core.viewers.ZoomContributionViewItem;
 import org.eclipse.zest.core.widgets.Graph;
 import org.eclipse.zest.core.widgets.ZestStyles;
 import org.eclipse.zest.layouts.algorithms.SpaceTreeLayoutAlgorithm;
@@ -49,6 +48,12 @@ public class TreeView extends ViewPart implements IZoomableWorkbenchPart {
 		viewer.setContentProvider(new TreeViewNodeContentProvider());
 		viewer.setLabelProvider(new TreeViewLabelProvider());
 		viewer.setConnectionStyle(ZestStyles.CONNECTIONS_DIRECTED);
+		viewer.getGraphControl().getLightweightSystem().setEventDispatcher(
+				new SWTEventDispatcher() {
+					public void dispatchMouseMoved(
+							org.eclipse.swt.events.MouseEvent me) {
+					}
+				});
 
 		fillToolBar();
 	}

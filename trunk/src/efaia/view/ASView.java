@@ -1,19 +1,11 @@
 package efaia.view;
 
-import java.util.List;
-
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Table;
-import org.eclipse.swt.widgets.TableColumn;
-import org.eclipse.swt.widgets.TableItem;
-import org.eclipse.ui.part.ViewPart;
-import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
-import org.eclipse.swt.custom.StyledText;
-import org.eclipse.wb.swt.SWTResourceManager;
+import org.eclipse.ui.part.ViewPart;
 
 public class ASView extends ViewPart {
 	
@@ -32,8 +24,8 @@ public class ASView extends ViewPart {
 		
 		asText = new Text(parent, SWT.BORDER | SWT.READ_ONLY | SWT.H_SCROLL | SWT.V_SCROLL | SWT.CANCEL | SWT.CENTER | SWT.MULTI);
 		asText.setEnabled(false);
-		asText.setFont(SWTResourceManager.getFont("Segoe UI", 10, SWT.NORMAL));
-		asText.setBackground(SWTResourceManager.getColor(SWT.COLOR_WHITE));
+/*		asText.setFont(SWTResourceManager.getFont("Segoe UI", 10, SWT.NORMAL));
+		asText.setBackground(SWTResourceManager.getColor(SWT.COLOR_WHITE));*/
 		asText.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		
 		

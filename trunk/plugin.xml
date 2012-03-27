@@ -126,10 +126,6 @@
                name="appName"
                value="Deploy Test">
          </property>
-         <property
-               name="windowImages"
-               value="icons/efaia_16.png,icons/efaia.png">
-         </property>
       </product>
    </extension>
 
