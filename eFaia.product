@@ -11,7 +11,7 @@
       <vmArgsMac>-XstartOnFirstThread -Dorg.eclipse.swt.internal.carbon.smallFonts</vmArgsMac>
    </launcherArgs>
 
-   <windowImages/>
+   <windowImages i16="/eFaia/icons/efaia_16.png" i32="/eFaia/icons/efaia.png" i48="/eFaia/icons/efaia_48.png" i64="/eFaia/icons/efaia_64.png" i128="/eFaia/icons/efaia_128.png"/>
 
 
    <launcher name="eFaia">
@@ -25,7 +25,7 @@
 
    <vm>
       <linux include="false">org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.7</linux>
-      <windows include="false">org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.7</windows>
+      <windows include="false">org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/J2SE-1.4</windows>
    </vm>
 
 

@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.eclipse.draw2d.SWTEventDispatcher;
 import org.eclipse.draw2d.SWTGraphics;
+import org.eclipse.draw2d.geometry.Dimension;
 import org.eclipse.draw2d.geometry.Point;
 import org.eclipse.draw2d.geometry.Rectangle;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
@@ -22,7 +23,7 @@ import org.eclipse.zest.core.viewers.GraphViewer;
 import org.eclipse.zest.core.viewers.IZoomableWorkbenchPart;
 import org.eclipse.zest.core.widgets.Graph;
 import org.eclipse.zest.core.widgets.ZestStyles;
-import org.eclipse.zest.layouts.algorithms.SpaceTreeLayoutAlgorithm;
+import org.eclipse.zest.layouts.algorithms.TreeLayoutAlgorithm;
 
 import efaia.model.Node;
 import efaia.model.NodeModelContentProvider;
@@ -48,21 +49,22 @@ public class TreeView extends ViewPart implements IZoomableWorkbenchPart {
 		viewer.setContentProvider(new TreeViewNodeContentProvider());
 		viewer.setLabelProvider(new TreeViewLabelProvider());
 		viewer.setConnectionStyle(ZestStyles.CONNECTIONS_DIRECTED);
-		viewer.getGraphControl().getLightweightSystem().setEventDispatcher(
-				new SWTEventDispatcher() {
+		viewer.getGraphControl().getLightweightSystem()
+				.setEventDispatcher(new SWTEventDispatcher() {
 					public void dispatchMouseMoved(
 							org.eclipse.swt.events.MouseEvent me) {
 					}
 				});
-
 		fillToolBar();
 	}
 
 	private void fillToolBar() {
-		/*ZoomContributionViewItem toolbarZoomContributionViewItem = new ZoomContributionViewItem(
-				this);
-		IActionBars bars = getViewSite().getActionBars();
-		bars.getMenuManager().add(toolbarZoomContributionViewItem);*/
+		/*
+		 * ZoomContributionViewItem toolbarZoomContributionViewItem = new
+		 * ZoomContributionViewItem( this); IActionBars bars =
+		 * getViewSite().getActionBars();
+		 * bars.getMenuManager().add(toolbarZoomContributionViewItem);
+		 */
 
 	}
 
@@ -111,8 +113,13 @@ public class TreeView extends ViewPart implements IZoomableWorkbenchPart {
 		viewer.setInput(nodos);
 		getSite().setSelectionProvider(viewer);
 		nodoSeleccionado = nodos.get(0);
-		SpaceTreeLayoutAlgorithm l = new SpaceTreeLayoutAlgorithm();
-		// l.setResizing(false);
+		TreeLayoutAlgorithm l = new TreeLayoutAlgorithm();
+		int max_node = 0;
+		for (int i = 0; i < nodos.size(); i++) {
+			if(nodos.get(i).getName().length() > max_node)
+				max_node = nodos.get(i).getName().length();
+		}
+		l.setNodeSpace(new Dimension((7*max_node)+20, 80));
 		viewer.setLayoutAlgorithm(l, true);
 		viewer.applyLayout();
 		viewer.addSelectionChangedListener(new ISelectionChangedListener() {
@@ -128,7 +135,7 @@ public class TreeView extends ViewPart implements IZoomableWorkbenchPart {
 						Node n = (Node) nodes.get(nodes.size() - 1);
 						ASView asView = (ASView) getSite().getPage().findView(
 								ASView.ID);
-						
+
 						asView.setearDatos(n.getAgentState());
 					}
 				}
@@ -146,7 +153,7 @@ public class TreeView extends ViewPart implements IZoomableWorkbenchPart {
 		}
 
 	}
-	
+
 	public void saveImage(String filename, int format) {
 		Graph g = (Graph) viewer.getControl();
 		Rectangle bounds = g.getContents().getBounds();

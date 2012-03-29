@@ -23,8 +23,6 @@ public class FileHandler extends DefaultHandler implements Constantes {
 	private final XMLReader file;
 	private List<Node> nodos;
 	private List<Connection> conecciones;
-	
-	
 
 	public FileHandler() throws SAXException {
 		file = XMLReaderFactory.createXMLReader();
@@ -33,20 +31,14 @@ public class FileHandler extends DefaultHandler implements Constantes {
 		nodos = new ArrayList<Node>();
 		conecciones = new ArrayList<Connection>();
 	}
-	
-	
 
 	public List<Node> getNodos() {
 		return nodos;
 	}
 
-
-
 	public List<Connection> getConecciones() {
 		return conecciones;
 	}
-
-
 
 	public void leer(final String archivoXML) throws FileNotFoundException,
 			IOException, SAXException {
@@ -61,17 +53,14 @@ public class FileHandler extends DefaultHandler implements Constantes {
 	@Override
 	public void endDocument() {
 	}
-	
-
 
 	@Override
 	public void startElement(String uri, String name, String qName,
 			Attributes atts) {
-		
-		if ( qName.equals(NODE)) {
-            parseNode(atts);
-        }
-		else if ( qName.equals(EDGE)){
+
+		if (qName.equals(NODE)) {
+			parseNode(atts);
+		} else if (qName.equals(EDGE)) {
 			parseEdge(atts);
 		}
 	}
@@ -79,54 +68,64 @@ public class FileHandler extends DefaultHandler implements Constantes {
 	@Override
 	public void endElement(String uri, String name, String qName) {
 	}
-    
-    protected void parseNode(Attributes atts) {
-        String alName, id = null, action = null, cost=null, agentState = null;
-        for ( int i = 0; i < atts.getLength(); i++ ) {
-            alName = atts.getQName(i);
-            if ( alName.equals(ID) ) {
-                id = atts.getValue(i);
-            } else if ( alName.equals(ACTION) ) {
-                action = atts.getValue(i);
-            } else if ( alName.equals(COST) ){
-            	cost = atts.getValue(i);
-            } else if ( alName.equals(AGENT_STATE) ){
-            	agentState = atts.getValue(i);
-            }
-        }
-        if ( id == null || action == null || cost == null || agentState == null ) {
-            System.err.println("Error Nodo");
-            return;
-        }
-        
-        Node n =new Node(id, action, cost, agentState);
-        nodos.add(n);
-    }
-    
-    private void parseEdge(Attributes atts) {
-		
+
+	protected void parseNode(Attributes atts) {
+		String alName, id = null, action = null, cost = null, agentState = null;
+		for (int i = 0; i < atts.getLength(); i++) {
+			alName = atts.getQName(i);
+			if (alName.equals(ID)) {
+				id = atts.getValue(i);
+			} else if (alName.equals(ACTION)) {
+				action = atts.getValue(i);
+			} else if (alName.equals(COST)) {
+				cost = atts.getValue(i);
+			} else if (alName.equals(AGENT_STATE)) {
+				agentState = atts.getValue(i);
+			}
+		}
+		if (id == null || action == null || cost == null || agentState == null) {
+			System.err.println("Error Nodo");
+			return;
+		}
+
+		Node n = new Node(id, action, cost, agentState);
+		nodos.add(n);
+	}
+
+	private void parseEdge(Attributes atts) {
+
 		String alName, idS = null, idT = null;
-        for ( int i = 0; i < atts.getLength(); i++ ) {
-            alName = atts.getQName(i);
-            if ( alName.equals(SOURCE) ) {
-                idS = atts.getValue(i);
-            } else if ( alName.equals(TARGET) ) {
-                idT = atts.getValue(i);
-            }
-        }
-        
-        if ( idS == null || idT == null) {
-            System.err.println("Error Coneccion");
-            return;
-        }
-        
-        Integer s = new Integer(idS);
-        Integer t = new Integer(idT);
-        
-        Connection c = new Connection(idS, idT, nodos.get(s.intValue()), nodos.get(t.intValue()));
-        conecciones.add(c);
-		
-		
+		for (int i = 0; i < atts.getLength(); i++) {
+			alName = atts.getQName(i);
+			if (alName.equals(SOURCE)) {
+				idS = atts.getValue(i);
+			} else if (alName.equals(TARGET)) {
+				idT = atts.getValue(i);
+			}
+		}
+
+		if (idS == null || idT == null) {
+			System.err.println("Error Coneccion");
+			return;
+		}
+
+		Integer s = new Integer(idS);
+		Integer t = new Integer(idT);
+		Node source = null;
+		Node target = null;
+
+		for (int i = 0; i < nodos.size(); i++) {
+			if (nodos.get(i).getId().equals(s.toString()))
+				source = nodos.get(i);
+			if (nodos.get(i).getId().equals(t.toString()))
+				target = nodos.get(i);
+		}
+
+		if ((source != null) && (target != null)) {
+			Connection c = new Connection(idS, idT, source, target);
+			conecciones.add(c);
+		}
+
 	}
 
 	protected Class parseType(String type) {
