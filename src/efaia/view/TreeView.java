@@ -17,10 +17,12 @@ import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.graphics.ImageData;
 import org.eclipse.swt.graphics.ImageLoader;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.ui.IActionBars;
 import org.eclipse.ui.part.ViewPart;
 import org.eclipse.zest.core.viewers.AbstractZoomableViewer;
 import org.eclipse.zest.core.viewers.GraphViewer;
 import org.eclipse.zest.core.viewers.IZoomableWorkbenchPart;
+import org.eclipse.zest.core.viewers.ZoomContributionViewItem;
 import org.eclipse.zest.core.widgets.Graph;
 import org.eclipse.zest.core.widgets.ZestStyles;
 import org.eclipse.zest.layouts.algorithms.TreeLayoutAlgorithm;
@@ -59,12 +61,11 @@ public class TreeView extends ViewPart implements IZoomableWorkbenchPart {
 	}
 
 	private void fillToolBar() {
-		/*
-		 * ZoomContributionViewItem toolbarZoomContributionViewItem = new
-		 * ZoomContributionViewItem( this); IActionBars bars =
-		 * getViewSite().getActionBars();
-		 * bars.getMenuManager().add(toolbarZoomContributionViewItem);
-		 */
+		
+		 ZoomContributionViewItem toolbarZoomContributionViewItem = new ZoomContributionViewItem( this); 
+		 IActionBars bars = getViewSite().getActionBars();
+		 bars.getMenuManager().add(toolbarZoomContributionViewItem);
+		 
 
 	}
 
