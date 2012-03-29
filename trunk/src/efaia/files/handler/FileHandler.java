@@ -17,6 +17,7 @@ import org.xml.sax.helpers.XMLReaderFactory;
 import efaia.model.Connection;
 import efaia.model.Node;
 import efaia.util.Constantes;
+import efaia.util.FileNotSupportedException;
 
 public class FileHandler extends DefaultHandler implements Constantes {
 
@@ -56,7 +57,7 @@ public class FileHandler extends DefaultHandler implements Constantes {
 
 	@Override
 	public void startElement(String uri, String name, String qName,
-			Attributes atts) {
+			Attributes atts){
 
 		if (qName.equals(NODE)) {
 			parseNode(atts);
@@ -84,7 +85,7 @@ public class FileHandler extends DefaultHandler implements Constantes {
 			}
 		}
 		if (id == null || action == null || cost == null || agentState == null) {
-			System.err.println("Error Nodo");
+			System.err.println("Error Coneccion");
 			return;
 		}
 

@@ -1,7 +1,9 @@
 package efaia.view;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 
+import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.viewers.DoubleClickEvent;
 import org.eclipse.jface.viewers.IDoubleClickListener;
 import org.eclipse.jface.viewers.ListViewer;
@@ -46,15 +48,23 @@ public class FilesView extends ViewPart {
 						.getActiveWorkbenchWindow().getActivePage()
 						.getViewReferences();
 				for (int i = 0; i < viewReferences.length; i++) {
-					if(viewReferences[i].getId().equals(TreeView.ID)){
+					if (viewReferences[i].getId().equals(TreeView.ID)) {
 						tv = (TreeView) viewReferences[i].getPart(true);
 					}
-						
+
 				}
-				
-				if(tv != null){
-					tv.cargarArbol(event.getSelection().toString());
-					tv.setTitle(event.getSelection().toString());
+
+				if (tv != null) {
+					try {
+						tv.cargarArbol(event.getSelection().toString());
+						tv.setTitle(event.getSelection().toString());
+					} catch (FileNotFoundException e) {
+						MessageDialog
+								.openError(PlatformUI.getWorkbench()
+										.getActiveWorkbenchWindow().getShell(),
+										"Error",
+										"El árchivo seleccionado no funciona.");
+					}
 				}
 			}
 		});
@@ -78,8 +88,8 @@ public class FilesView extends ViewPart {
 		listViewer.getControl().setFocus();
 
 	}
-	
-	public void setearRuta(String path){
+
+	public void setearRuta(String path) {
 		this.setContentDescription(path);
 	}
 }

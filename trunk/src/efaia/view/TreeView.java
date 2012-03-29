@@ -1,6 +1,8 @@
 package efaia.view;
 
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.List;
 
 import org.eclipse.draw2d.SWTEventDispatcher;
@@ -8,6 +10,7 @@ import org.eclipse.draw2d.SWTGraphics;
 import org.eclipse.draw2d.geometry.Dimension;
 import org.eclipse.draw2d.geometry.Point;
 import org.eclipse.draw2d.geometry.Rectangle;
+import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.viewers.StructuredSelection;
@@ -18,6 +21,7 @@ import org.eclipse.swt.graphics.ImageData;
 import org.eclipse.swt.graphics.ImageLoader;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.ui.IActionBars;
+import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.ViewPart;
 import org.eclipse.zest.core.viewers.AbstractZoomableViewer;
 import org.eclipse.zest.core.viewers.GraphViewer;
@@ -26,12 +30,14 @@ import org.eclipse.zest.core.viewers.ZoomContributionViewItem;
 import org.eclipse.zest.core.widgets.Graph;
 import org.eclipse.zest.core.widgets.ZestStyles;
 import org.eclipse.zest.layouts.algorithms.TreeLayoutAlgorithm;
+import org.xml.sax.SAXException;
 
 import efaia.model.Node;
 import efaia.model.NodeModelContentProvider;
 import efaia.model.Tree;
 import efaia.provider.TreeViewLabelProvider;
 import efaia.provider.TreeViewNodeContentProvider;
+import efaia.util.FileNotSupportedException;
 
 public class TreeView extends ViewPart implements IZoomableWorkbenchPart {
 
@@ -61,11 +67,11 @@ public class TreeView extends ViewPart implements IZoomableWorkbenchPart {
 	}
 
 	private void fillToolBar() {
-		
-		 ZoomContributionViewItem toolbarZoomContributionViewItem = new ZoomContributionViewItem( this); 
-		 IActionBars bars = getViewSite().getActionBars();
-		 bars.getMenuManager().add(toolbarZoomContributionViewItem);
-		 
+
+		ZoomContributionViewItem toolbarZoomContributionViewItem = new ZoomContributionViewItem(
+				this);
+		IActionBars bars = getViewSite().getActionBars();
+		bars.getMenuManager().add(toolbarZoomContributionViewItem);
 
 	}
 
@@ -105,44 +111,66 @@ public class TreeView extends ViewPart implements IZoomableWorkbenchPart {
 
 	}
 
-	public void cargarArbol(String path) {
-		String p1 = path.replace("[", "").replace("]", "");
-		File f = new File(p1);
-		NodeModelContentProvider model = new NodeModelContentProvider(
-				f.getPath());
-		nodos = model.getNodes();
-		viewer.setInput(nodos);
-		getSite().setSelectionProvider(viewer);
-		nodoSeleccionado = nodos.get(0);
-		TreeLayoutAlgorithm l = new TreeLayoutAlgorithm();
-		int max_node = 0;
-		for (int i = 0; i < nodos.size(); i++) {
-			if(nodos.get(i).getName().length() > max_node)
-				max_node = nodos.get(i).getName().length();
-		}
-		l.setNodeSpace(new Dimension((7*max_node)+20, 80));
-		viewer.setLayoutAlgorithm(l, true);
-		viewer.applyLayout();
-		viewer.addSelectionChangedListener(new ISelectionChangedListener() {
-
-			@Override
-			public void selectionChanged(SelectionChangedEvent event) {
-				StructuredSelection s = (StructuredSelection) event
-						.getSelection();
-				if (s.size() > 0) {
-					List nodes = s.toList();
-					if (nodes.get(nodes.size() - 1).getClass()
-							.equals(Node.class)) {
-						Node n = (Node) nodes.get(nodes.size() - 1);
-						ASView asView = (ASView) getSite().getPage().findView(
-								ASView.ID);
-
-						asView.setearDatos(n.getAgentState());
-					}
+	public void cargarArbol(String path) throws FileNotFoundException{
+			try {
+				String p1 = path.replace("[", "").replace("]", "");
+				File f = new File(p1);
+				NodeModelContentProvider model = new NodeModelContentProvider(
+						f.getPath());
+				nodos = model.getNodes();
+				viewer.setInput(nodos);
+				getSite().setSelectionProvider(viewer);
+				nodoSeleccionado = nodos.get(0);
+				TreeLayoutAlgorithm l = new TreeLayoutAlgorithm();
+				int max_node = 0;
+				for (int i = 0; i < nodos.size(); i++) {
+					if(nodos.get(i).getName().length() > max_node)
+						max_node = nodos.get(i).getName().length();
 				}
+				l.setNodeSpace(new Dimension((7*max_node)+20, 80));
+				viewer.setLayoutAlgorithm(l, true);
+				viewer.applyLayout();
+				viewer.addSelectionChangedListener(new ISelectionChangedListener() {
 
+					@Override
+					public void selectionChanged(SelectionChangedEvent event) {
+						StructuredSelection s = (StructuredSelection) event
+								.getSelection();
+						if (s.size() > 0) {
+							List nodes = s.toList();
+							if (nodes.get(nodes.size() - 1).getClass()
+									.equals(Node.class)) {
+								Node n = (Node) nodes.get(nodes.size() - 1);
+								ASView asView = (ASView) getSite().getPage().findView(
+										ASView.ID);
+
+								asView.setearDatos(n.getAgentState());
+							}
+						}
+
+					}
+				});
+			} catch (FileNotSupportedException e) {
+				MessageDialog
+				.openError(PlatformUI.getWorkbench()
+						.getActiveWorkbenchWindow().getShell(),
+						"Error",
+						e.getMessage());
+			} catch (SAXException e) {
+				MessageDialog
+				.openError(PlatformUI.getWorkbench()
+						.getActiveWorkbenchWindow().getShell(),
+						"Error",
+						e.getMessage());
+			} catch (IOException e) {
+				MessageDialog
+				.openError(PlatformUI.getWorkbench()
+						.getActiveWorkbenchWindow().getShell(),
+						"Error",
+						e.getMessage());
 			}
-		});
+		
+
 	}
 
 	public void setTitle(String title) {
