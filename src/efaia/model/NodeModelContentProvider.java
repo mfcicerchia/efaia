@@ -8,22 +8,24 @@ import java.util.List;
 import org.xml.sax.SAXException;
 
 import efaia.files.handler.FileHandler;
+import efaia.util.FileNotSupportedException;
 
 public class NodeModelContentProvider {
 	private List<Connection> connections;
 	private List<Node> nodes;
 	private FileHandler fh;
 
-	public NodeModelContentProvider(String filePath) {
-		try {
+	public NodeModelContentProvider(String filePath) throws FileNotSupportedException, SAXException, FileNotFoundException, IOException {
 			fh = new FileHandler();
 			fh.leer(filePath);
 			nodes = fh.getNodos();
-//			System.out.println(nodes.size());
 			connections = fh.getConecciones();
-//			System.out.println(connections.size());
 
 
+			if(nodes.size() == 0){
+				throw new FileNotSupportedException("El árchivo seleccionado no es válido.");
+			}
+			
 			for (int i = 0; i < nodes.size(); i++) {
 				for (int j = 0; j < connections.size(); j++) {;
 					if(nodes.get(i).equals(connections.get(j).getSource()))
@@ -32,18 +34,11 @@ public class NodeModelContentProvider {
 			}
 			
 			
+			
 /*			for (Connection connection : connections) {
 				connection.getSource().getConnectedTo()
 						.add(connection.getDestination());
 			}*/
-
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		} catch (SAXException e) {
-			e.printStackTrace();
-		}
 	}
 
 	public List<Node> getNodes() {
