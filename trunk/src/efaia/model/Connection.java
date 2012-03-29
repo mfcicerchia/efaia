@@ -23,5 +23,15 @@ public class Connection {
 	public Node getDestination() {
 		return destination;
 	}
+	
+	@Override
+	public String toString() {
+		StringBuilder sb = new StringBuilder();
+		sb.append(this.source);
+		sb.append("---");
+		sb.append(this.destination);
+	
+		return sb.toString();
+	}
 
 }
