@@ -51,6 +51,14 @@
             name="Estado Ambiente"
             restorable="true">
       </view>
+      <view
+            allowMultiple="true"
+            class="efaia.view.TreeViewGEF"
+            icon="icons/search_tree.png"
+            id="eFaia.view.TreeViewGEF"
+            name="TreeViewGEF"
+            restorable="true">
+      </view>
    </extension>
       <extension
          point="org.eclipse.ui.menus">

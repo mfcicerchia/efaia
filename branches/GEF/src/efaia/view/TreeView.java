@@ -134,6 +134,7 @@ public class TreeView extends ViewPart implements IZoomableWorkbenchPart {
 
 					@Override
 					public void selectionChanged(SelectionChangedEvent event) {
+						System.out.println("Entra");
 						StructuredSelection s = (StructuredSelection) event
 								.getSelection();
 						if (s.size() > 0) {

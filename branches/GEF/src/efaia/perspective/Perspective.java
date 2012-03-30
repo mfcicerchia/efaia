@@ -7,6 +7,7 @@ import org.eclipse.ui.IPerspectiveFactory;
 import efaia.view.ASView;
 import efaia.view.FilesView;
 import efaia.view.TreeView;
+import efaia.view.TreeViewGEF;
 
 public class Perspective implements IPerspectiveFactory {
 	private IFolderLayout fl;
@@ -15,12 +16,13 @@ public class Perspective implements IPerspectiveFactory {
 		layout.setEditorAreaVisible(false);
 
 		//layout.addShowViewShortcut(TreeView.ID);
-		fl = layout.createFolder("trees", IPageLayout.RIGHT, 0.16f,
+		/*fl = layout.createFolder("trees", IPageLayout.RIGHT, 0.16f,
 				IPageLayout.ID_EDITOR_AREA);
-		fl.addPlaceholder(TreeView.ID+":*");
+		fl.addPlaceholder(TreeViewGEF.ID+":*");*/
 
-		layout.addView(ASView.ID, IPageLayout.BOTTOM, 0.78f, "trees");
-		layout.addView(FilesView.ID, IPageLayout.LEFT, 0.29f, "trees");
+		layout.addView(TreeViewGEF.ID,IPageLayout.RIGHT,0.16f,IPageLayout.ID_EDITOR_AREA);
+		layout.addView(ASView.ID, IPageLayout.BOTTOM, 0.78f, TreeViewGEF.ID);
+		layout.addView(FilesView.ID, IPageLayout.LEFT, 0.29f, TreeViewGEF.ID);
 		
 	}
 }
