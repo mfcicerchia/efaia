@@ -4,14 +4,20 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.StringTokenizer;
 
+import efaia.model.listeners.NodeListener;
+
 public class Node {
 	private String id;
 	private String name;
 	private String cost;
 	private String agentState;
 	private List<Node> connections;
+	private int x;
+	private int y;
+	private int width;
+	private int height;
 
-	public Node(String id, String name, String cost) {
+	public Node(String id, String name, String cost){
 		this.id = id;
 		this.name = name;
 		this.cost = cost;
@@ -109,4 +115,32 @@ public class Node {
 		sb.append(name);
 		return sb.toString();
 	}
+	
+	public void setLocation(int x, int y){
+		this.x = x;
+		this.y = y;
+	}
+	
+	public void setSize(int width, int height){
+		this.width = width;
+		this.height = height;
+	}
+
+	public int getX() {
+		return x;
+	}
+
+	public int getY() {
+		return y;
+	}
+
+	public int getWidth() {
+		return width;
+	}
+
+	public int getHeight() {
+		return height;
+	}
+	
+	
 }

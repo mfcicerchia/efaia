@@ -3,6 +3,9 @@ package efaia.provider;
 import org.eclipse.draw2d.ColorConstants;
 import org.eclipse.draw2d.IFigure;
 import org.eclipse.jface.viewers.IColorProvider;
+import org.eclipse.jface.viewers.ISelection;
+import org.eclipse.jface.viewers.ISelectionChangedListener;
+import org.eclipse.jface.viewers.ISelectionProvider;
 import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.zest.core.viewers.EntityConnectionData;
@@ -12,7 +15,7 @@ import efaia.figures.NodeFigure;
 import efaia.model.Connection;
 import efaia.model.Node;
 
-public class TreeViewLabelProvider extends LabelProvider implements IColorProvider, IFigureProvider {
+public class TreeViewLabelProvider extends LabelProvider implements IColorProvider, IFigureProvider, ISelectionProvider {
 	@Override
 	public String getText(Object element) {
 		if (element instanceof Node) {
@@ -59,6 +62,31 @@ public class TreeViewLabelProvider extends LabelProvider implements IColorProvid
 			return nf;
 		}
 		return null;
+	}
+
+	@Override
+	public void addSelectionChangedListener(ISelectionChangedListener listener) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public ISelection getSelection() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void removeSelectionChangedListener(
+			ISelectionChangedListener listener) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void setSelection(ISelection selection) {
+		// TODO Auto-generated method stub
+		
 	}
 
 	
