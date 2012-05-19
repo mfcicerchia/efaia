@@ -7,7 +7,6 @@ import java.util.List;
 
 import org.eclipse.draw2d.SWTEventDispatcher;
 import org.eclipse.draw2d.SWTGraphics;
-import org.eclipse.draw2d.geometry.Dimension;
 import org.eclipse.draw2d.geometry.Point;
 import org.eclipse.draw2d.geometry.Rectangle;
 import org.eclipse.jface.dialogs.MessageDialog;
@@ -29,7 +28,7 @@ import org.eclipse.zest.core.viewers.IZoomableWorkbenchPart;
 import org.eclipse.zest.core.viewers.ZoomContributionViewItem;
 import org.eclipse.zest.core.widgets.Graph;
 import org.eclipse.zest.core.widgets.ZestStyles;
-import org.eclipse.zest.layouts.algorithms.TreeLayoutAlgorithm;
+import org.eclipse.zest.layouts.algorithms.SpaceTreeLayoutAlgorithm;
 import org.xml.sax.SAXException;
 
 import efaia.model.Node;
@@ -121,14 +120,9 @@ public class TreeView extends ViewPart implements IZoomableWorkbenchPart {
 				viewer.setInput(nodos);
 				getSite().setSelectionProvider(viewer);
 				nodoSeleccionado = nodos.get(0);
-				TreeLayoutAlgorithm l = new TreeLayoutAlgorithm();
-				int max_node = 0;
-				for (int i = 0; i < nodos.size(); i++) {
-					if(nodos.get(i).getName().length() > max_node)
-						max_node = nodos.get(i).getName().length();
-				}
-				l.setNodeSpace(new Dimension((7*max_node)+20, 80));
+				SpaceTreeLayoutAlgorithm l = new SpaceTreeLayoutAlgorithm();
 				viewer.setLayoutAlgorithm(l, true);
+				viewer.getGraphControl().setPreferredSize(1024, 800);
 				viewer.applyLayout();
 				viewer.addSelectionChangedListener(new ISelectionChangedListener() {
 
